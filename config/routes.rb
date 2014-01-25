@@ -1,4 +1,5 @@
 BattleOfTheBands::Application.routes.draw do
+
 #  get "static_pages/..."
 
   match '/',        to: 'static_pages#home'
@@ -12,7 +13,6 @@ BattleOfTheBands::Application.routes.draw do
 
   root to: 'static_pages#home'
 
-  get "users/new"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
