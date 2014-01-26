@@ -12,7 +12,7 @@ BattleOfTheBands::Application.routes.draw do
 
   
   resources :sessions, only: [:new, :create, :destroy]
-  resources :competitions
+  resources :competitions, only: [:create, :destroy]
   resources :users
 
   root to: 'static_pages#home'

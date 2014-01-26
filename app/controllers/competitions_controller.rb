@@ -1,4 +1,6 @@
 class CompetitionsController < ApplicationController
+  before_action :signed_in_user, only: [:create, :destroy]
+
   # GET /competitions
   # GET /competitions.json
   def index
@@ -41,15 +43,11 @@ class CompetitionsController < ApplicationController
   # POST /competitions.json
   def create
     @competition = Competition.new(params[:competition])
-
-    respond_to do |format|
-      if @competition.save
-        format.html { redirect_to @competition, notice: 'Competition was successfully created.' }
-        format.json { render json: @competition, status: :created, location: @competition }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @competition.errors, status: :unprocessable_entity }
-      end
+    if @competition.save
+      flash[:success] = "Competition created"
+      redirect_to root_url
+    else
+      render 'static_pages/home'
     end
   end
 
@@ -80,4 +78,8 @@ class CompetitionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private
+  def competition_params
+    params.require(:competition).permit(:content)
+    end
 end

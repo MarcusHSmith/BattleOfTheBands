@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   	attr_accessible :email, :name, :password, :password_confirmation
 
-  	has_many :competitions
+  	has_many :competitions, dependent: :destroy
 
   	validates :name, presence: true, length: { maximum: 50 }
 
