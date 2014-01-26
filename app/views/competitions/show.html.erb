@@ -7,9 +7,23 @@
 
 <p>
   <b>User:</b>
-  <%= @competition.user_id %>
+  <%= @user.name %>
 </p>
+<p><strong>Attendees: </strong>
+    <%= link_to 'Attend Competition', attend_competition_path(@competition.id), :method => :post %>
 
+    <ul>
+        <% for attendee in @competition.users %>
+            <% if attendee.id == current_user.id %>
+                <li><strong><%= link_to attendee.name, user_path %></strong>
+                   <!-- <%= link_to 'Withdraw', withdraw_competition_path(@competition.id), :method => :post %> -->
+                </li>
+            <% else %>
+                <li><%= link_to attendee.name, user_path %></li>
+            <% end %>
+        <% end %>   
+    </ul>
+</p>
 
 <%= link_to 'Edit', edit_competition_path(@competition) %> |
 <%= link_to 'Back', competitions_path %>

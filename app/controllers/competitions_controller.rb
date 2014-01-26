@@ -1,22 +1,17 @@
 class CompetitionsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
+  before_filter   :signed_in_user, only: [:index, :edit, :update, :destroy, :create, :attend]
 
   # GET /competitions
   # GET /competitions.json
   def index
     @competitions = Competition.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @competitions }
-    end
   end
 
   # GET /competitions/1
   # GET /competitions/1.json
   def show
     @competition = Competition.find(params[:id])
-
+    @user = User.find(@competition.user_id)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @competition }
@@ -43,6 +38,7 @@ class CompetitionsController < ApplicationController
   # POST /competitions.json
   def create
     @competition = Competition.new(params[:competition])
+    @competition.user_id = current_user.id
     if @competition.save
       flash[:success] = "Competition created"
       redirect_to root_url
@@ -78,8 +74,48 @@ class CompetitionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def attend
+    @competition = Competition.find(params[:id])
+    if @competition.users.include?(current_user)
+      flash[:error] = "You're already attending this competition."
+    else
+      current_user.competitions << @competition
+      flash[:success] = "Attending competition!"
+    end
+    redirect_to @competition
+  end
+
+  def withdraw
+    event    = Competition.find(params[:id])
+    attendee = Attendee.find_by_user_id_and_competition_id(current_user.id, competition.id)
+
+    if attendee.blank?
+      flash[:error] = "No current attendees"
+    else
+      attendee.delete
+      flash[:success] = 'You are no longer attending this competition.'
+    end
+    redirect_to competition
+  end
+
+
   private
-  def competition_params
-    params.require(:competition).permit(:content)
+    def competition_params
+      params.require(:competition).permit(:content)
+    end
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Please sign in."
+      end
+    end
+    def correct_user
+      if (Event.find(params[:id]).user_id != current_user.id and !current_user.admin?)
+        redirect_to competitions_path
+        flash[:error] = "You do not own this competition"
+      end
+    end
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
     end
 end

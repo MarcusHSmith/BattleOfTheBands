@@ -12,8 +12,18 @@ BattleOfTheBands::Application.routes.draw do
 
   
   resources :sessions, only: [:new, :create, :destroy]
-  resources :competitions, only: [:create, :destroy]
+  resources :competitions, only: [:create, :destroy, :new, :index]
   resources :users
+
+  resources   :competitions do
+    post 'attend', on: :member
+  end
+  resources :competitions do
+    member do 
+      post 'withdraw'
+    end
+  end
+
 
   root to: 'static_pages#home'
 
