@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
     has_many :attendees, :dependent => :destroy
     has_many :competitions, :through => :attendees
 
+    has_one :device
 
   	validates :name, presence: true, length: { maximum: 50 }
 

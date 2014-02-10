@@ -1,5 +1,7 @@
 BattleOfTheBands::Application.routes.draw do
 
+
+
 #  get "static_pages/..."
 
   match '/',        to: 'static_pages#home'
@@ -14,6 +16,10 @@ BattleOfTheBands::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :competitions, only: [:create, :destroy, :new, :index]
   resources :users
+  resources :devices
+  resources :device
+
+  match '/auth/:provider/callback' => 'devices#create'
 
   resources   :competitions do
     post 'attend', on: :member

@@ -25,7 +25,10 @@ gem 'bcrypt-ruby'
 gem 'faker'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
-gem 'pg', '0.15.1'
+gem 'omniauth'
+gem 'omniauth-fitbit'
+gem 'nifty-generators'
+
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
@@ -35,3 +38,5 @@ group :production do
   gem 'pg', '0.15.1'
   gem 'rails_12factor', '0.0.2'
 end
+
+gem "mocha", :group => :test

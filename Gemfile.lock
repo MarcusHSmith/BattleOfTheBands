@@ -55,6 +55,7 @@ GEM
     faker (1.2.0)
       i18n (~> 0.5)
     ffi (1.9.3)
+    hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (1.0.2)
@@ -68,11 +69,26 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.2)
     mime-types (1.25.1)
     mini_portile (0.5.2)
+    mocha (1.0.0)
+      metaclass (~> 0.0.1)
     multi_json (1.8.4)
+    multi_xml (0.5.5)
+    nifty-generators (0.4.6)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    oauth (0.4.7)
+    omniauth (1.2.1)
+      hashie (>= 1.2, < 3)
+      rack (~> 1.0)
+    omniauth-fitbit (1.0.3)
+      multi_xml
+      omniauth-oauth (~> 1.0)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -165,6 +181,10 @@ DEPENDENCIES
   faker
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
+  mocha
+  nifty-generators
+  omniauth
+  omniauth-fitbit
   pg (= 0.15.1)
   rails (= 3.2.3)
   rails_12factor (= 0.0.2)
