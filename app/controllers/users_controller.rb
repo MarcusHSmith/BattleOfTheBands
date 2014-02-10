@@ -6,7 +6,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    p @user.name
+    p @user.competitions.all
+    p @user.device
+    
     @competitions = @user.competitions.paginate(page: params[:page])
+    @device = @user.device
   end
 
   def new

@@ -6,6 +6,9 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
+      <% if @device %>
+        <p><%= @device.provider %> user</p>
+      <% end %>
     </section>
   </aside>
   <div class="span8">
