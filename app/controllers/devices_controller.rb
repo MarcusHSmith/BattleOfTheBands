@@ -5,6 +5,7 @@ class DevicesController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
+    p auth
     if current_user.device != nil
       current_user.device.destroy
       flash[:alert] = "Deleted previous device."
