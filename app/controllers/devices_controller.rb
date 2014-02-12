@@ -16,17 +16,19 @@ class DevicesController < ApplicationController
     bit.uid = auth['uid']
     bit.oauth_token = params['oauth_token']
     bit.oauth_verifier = params['oauth_verifier']
+    bit.oauth_token_secret = auth['oauth_token_secret']
     if bit.save
-      flash[:notice] = "Device pairing successful."
+      flash[:success] = "Device pairing successful."
     else 
-      flash[:alert] = "Device unsuccessful."
+      flash[:error] = "Device unsuccessful."
     end
     redirect_to root_path
   end
 
   def destroy
     current_user.device = nil
-    redirect_to root_path, :notice => "Successfully destroyed device."
+    flash[:success] = "Successfully destroyed device."
+    redirect_to root_path
   end
 
   def show

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140210000927) do
+ActiveRecord::Schema.define(:version => 20140212204556) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(:version => 20140210000927) do
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "oauth_token"
     t.string   "oauth_verifier"
+    t.string   "oauth_token_secret"
   end
 
   create_table "users", :force => true do |t|
