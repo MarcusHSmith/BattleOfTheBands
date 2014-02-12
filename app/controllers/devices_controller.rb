@@ -12,11 +12,17 @@ class DevicesController < ApplicationController
     end
     bit = Device.new
     bit.user_id = current_user.id
+    p bit.user_id
     bit.provider = auth['provider']
+    p bit.provider
     bit.uid = auth['uid']
-    bit.oauth_token = params['oauth_token']
+    p bit.uid
+    bit.oauth_token = auth['credentials']['token']
+    p bit.oauth_token
     bit.oauth_verifier = params['oauth_verifier']
-    bit.oauth_token_secret = auth['oauth_token_secret']
+    p bit.oauth_verifier
+    bit.oauth_token_secret = auth['credentials']['secret']
+    p bit.oauth_token_secret
     if bit.save
       flash[:success] = "Device pairing successful."
     else 
