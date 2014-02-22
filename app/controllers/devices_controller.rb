@@ -23,6 +23,10 @@ class DevicesController < ApplicationController
     p bit.oauth_verifier
     bit.oauth_token_secret = auth['credentials']['secret']
     p bit.oauth_token_secret
+
+    now =  Time.now()
+    current_user.lastUpdated = now
+
     if bit.save
       flash[:success] = "Device pairing successful."
     else 

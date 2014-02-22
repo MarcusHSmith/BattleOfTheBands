@@ -6,11 +6,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    p @user.name
-    p @user.competitions.all
     if (@user.device != nil)
-      p "PRINTING DEVICES"
-      p @user.device
       @device = @user.device
 
       client = Fitgem::Client.new(
@@ -21,21 +17,32 @@ class UsersController < ApplicationController
         #:user_id => @device.uid
       )
       now =  Time.now()
-      @today = client.activities_on_date 'today'
-      @todaySteps = @today['summary']['steps']
-      day1 = client.activities_on_date (now - 1.days).strftime("%Y-%m-%d")
-      @day1 = day1['summary']['steps']
-      day2 = client.activities_on_date (now - 2.days).strftime("%Y-%m-%d")
-      @day2 = day2['summary']['steps']
-      day3 = client.activities_on_date (now - 3.days).strftime("%Y-%m-%d")
-      @day3 = day3['summary']['steps']
-      day4 = client.activities_on_date (now - 4.days).strftime("%Y-%m-%d")
-      @day4 = day4['summary']['steps']
-      day5 = client.activities_on_date (now - 5.days).strftime("%Y-%m-%d")
-      @day5 = day5['summary']['steps']
-      day6 = client.activities_on_date (now - 6.days).strftime("%Y-%m-%d")
-      @day6 = day6['summary']['steps']
+      if @user.lastUpdated == nil
+        p 'LastUpdated nil compensation'
+        @user.lastUpdated = now
+      end
+      last = @user.lastUpdated
 
+
+      while now.day > last.day
+        day = client.activities_on_date last.strftime("%Y-%m-%d")
+        day = day['summary']['steps']
+        now = now + 1.days
+        p day
+        @user.year = @user.year.unshift(day)
+      end
+      #doesn't include today
+      if now.day != last.day
+        @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
+        @user.year.unshift(@user.today_steps)
+      else
+        @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
+        @user.year[0] = @user.today_steps
+      end
+
+      p @user.today_steps
+      p @user.year
+      @user.lastUpdated = now
 
     end
     
@@ -68,6 +75,7 @@ class UsersController < ApplicationController
 
 def create
     @user = User.new(params[:user])
+
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"

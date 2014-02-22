@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212204556) do
+ActiveRecord::Schema.define(:version => 20140222045507) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -48,6 +48,10 @@ ActiveRecord::Schema.define(:version => 20140212204556) do
     t.string   "password_digest"
     t.boolean  "admin",           :default => false
     t.string   "remember_token"
+    t.integer  "year"
+    t.datetime "lastUpdate"
+    t.date     "lastUpdated"
+    t.integer  "today_steps"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
