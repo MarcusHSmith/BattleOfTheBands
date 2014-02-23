@@ -7,7 +7,7 @@
         <%= @user.name %>
       </h1>
       <% if @device %>
-        <p><%= @device.provider %> user</p>
+        <p><%= link_to @device.provider, ("http://www.fitbit.com/user/" + @device.uid) %></p>
         <p><%= @user.today_steps %> steps today</p>
 
       <% end %>

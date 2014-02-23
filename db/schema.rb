@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140222045507) do
+ActiveRecord::Schema.define(:version => 20140223000219) do
 
   create_table "attendees", :force => true do |t|
     t.integer  "event_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20140222045507) do
     t.string   "oauth_token"
     t.string   "oauth_verifier"
     t.string   "oauth_token_secret"
+    t.date     "lastUpdated"
   end
 
   create_table "users", :force => true do |t|

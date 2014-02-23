@@ -25,7 +25,9 @@ class DevicesController < ApplicationController
     p bit.oauth_token_secret
 
     now =  Time.now()
-    current_user.lastUpdated = now
+    bit.lastUpdated = (now - 7.days)
+
+
 
     if bit.save
       flash[:success] = "Device pairing successful."

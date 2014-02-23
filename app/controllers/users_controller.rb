@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    p @user
     if (@user.device != nil)
       @device = @user.device
 
@@ -17,32 +18,35 @@ class UsersController < ApplicationController
         #:user_id => @device.uid
       )
       now =  Time.now()
-      if @user.lastUpdated == nil
-        p 'LastUpdated nil compensation'
-        @user.lastUpdated = now
-      end
-      last = @user.lastUpdated
+      last = @device.lastUpdated
+      p now.day
+      p last.day
 
 
       while now.day > last.day
         day = client.activities_on_date last.strftime("%Y-%m-%d")
+        break if day['errors'] != nil
+        p day
         day = day['summary']['steps']
         now = now + 1.days
-        p day
         @user.year = @user.year.unshift(day)
       end
       #doesn't include today
       if now.day != last.day
-        @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
-        @user.year.unshift(@user.today_steps)
+        day = (client.activities_on_date 'today')
+        if day['errors'] == nil
+          @user.today_steps = day['summary']['steps']
+          @user.year.unshift(@user.today_steps)
+        end
       else
-        @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
-        @user.year[0] = @user.today_steps
+        if day['errors'] == nil
+          @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
+          @user.year[0] = @user.today_steps
+        end
       end
 
-      p @user.today_steps
       p @user.year
-      @user.lastUpdated = now
+      @device.lastUpdated = now
 
     end
     
