@@ -1,8 +1,19 @@
+$grayMediumLight: #eaeaea;
+$linkColor:       #000000;
+$linkColorHover:  #eaeaea;
+$navbarText:      #ffffff;
+
+
 @import "bootstrap";
 
 /* mixins, variables, etc. */
 
-$grayMediumLight: #eaeaea;
+.navbar-inverse .navbar-nav>li>a:hover {
+  color: #707070;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #000;
+}
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -15,6 +26,7 @@ $grayMediumLight: #eaeaea;
 html {
   overflow-y: scroll;
 }
+
 
 body {
   padding-top: 60px;
@@ -74,7 +86,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $gray-light;
+  color: $gray;
 }
 
 p {
@@ -89,6 +101,7 @@ p2 {
 
 /* header */
 
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -98,11 +111,6 @@ p2 {
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
-  &:hover {
-    color: white;
-    text-decoration: none;
-    background-color: black;
-  }
 }
 
 
@@ -117,9 +125,6 @@ footer {
   color: $gray-light;
   a {
     color: $gray;
-    &:hover {
-      color: $gray-darker;
-    }
   }
   small {
     float: left;
@@ -249,17 +254,7 @@ input {
   }
 }
 
-/* microposts */
 
-.microposts {
-  list-style: none;
-  margin: 10px 0 0 0;
-
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
-}
 .content {
   display: block;
 }

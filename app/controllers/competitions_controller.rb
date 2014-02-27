@@ -9,10 +9,12 @@ class CompetitionsController < ApplicationController
     @competition = Competition.find(params[:id])
     @user = User.find(current_user.id)
     #@competition.users[0].today_steps
-    p @user.year
-    @competition.users.sort_by{|e| e[:name]}
+    
+    @competition.users.sort_by!{|user| -user.daily.first(7).sum}
     for comp in @competition.users
       p comp.name
+      p comp.daily
+
     end
     respond_to do |format|
       format.html # show.html.erb
@@ -70,10 +72,11 @@ class CompetitionsController < ApplicationController
   end
 
   def attend
+    p current_user.daily
     @competition = Competition.find(params[:id])
     if @competition.users.include?(current_user)
       flash[:error] = "You're already attending this competition."
-    elsif current_user.year != []
+    elsif current_user.daily == []
       flash[:error] = "You must have a working device to compete."
     else
       current_user.competitions << @competition

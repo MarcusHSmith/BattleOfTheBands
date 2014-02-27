@@ -19,8 +19,9 @@
     <ul>
         <% for attendee in @competition.users %>
           <li><%= link_to attendee.name, user_path %></li>
-          <% if attendee.year != [] %>
-           <p><%= attendee.year %></p>
+          <% if attendee.daily != [] %>
+           <p><%= attendee.daily %></p>
+           <p><%= attendee.daily.first(7).sum %></p>
           <% end %>
         <% end %>   
     </ul>
