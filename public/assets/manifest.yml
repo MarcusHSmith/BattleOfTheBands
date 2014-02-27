@@ -1,8 +1,10 @@
 ---
 fitbit_128.png: fitbit_128-de1c1f780f9d3cf62df2a5680314061b.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
-application.js: application-49cf273b103f4324db89d86393f703fd.js
-application.css: application-971d43f2840572952aad1140a03c2a8f.css
-glyphicons-halflings-white.png: glyphicons-halflings-white-ef3d5b8d6a297804352b4a46fdb5466d.png
-glyphicons-halflings.png: glyphicons-halflings-0e7ff93d8f48fe1f5f762e4312e78da7.png
+application.js: application-b4e9127a795bf8f43c28c215d6af8888.js
+application.css: application-f56440f0b2ff6d8e5d83b8a8824eb45a.css
+bootstrap/glyphicons-halflings-regular.eot: bootstrap/glyphicons-halflings-regular-7fbbd0a0a515fb1d91f405f316761090.eot
+bootstrap/glyphicons-halflings-regular.svg: bootstrap/glyphicons-halflings-regular-eaeb1efbb598070794aa437ea9530cec.svg
+bootstrap/glyphicons-halflings-regular.ttf: bootstrap/glyphicons-halflings-regular-0c54603383344228e8ab09247a7d5dc5.ttf
+bootstrap/glyphicons-halflings-regular.woff: bootstrap/glyphicons-halflings-regular-782df2ddaa5d675bc71e532088677e99.woff
 jquery.min.map: jquery.min-70bec01470bf6bcfed5892ae554b38c8.map

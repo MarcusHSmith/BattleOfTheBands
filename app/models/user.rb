@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
 
-	attr_accessible :email, :name, :password, :password_confirmation
+	attr_accessible :email, :name, :password, :password_confirmation, :daily, :today_steps
 
 	has_many :competitions, dependent: :destroy
   has_many :attendees, :dependent => :destroy
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 	validates :password, length: { minimum: 6 }
 
-  serialize :year, Array
+  serialize :daily, Array
 
 
   def User.new_remember_token

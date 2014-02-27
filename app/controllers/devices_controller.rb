@@ -34,7 +34,7 @@ class DevicesController < ApplicationController
     else 
       flash[:error] = "Device unsuccessful."
     end
-    redirect_to root_path
+    redirect_to current_user
   end
 
   def destroy
@@ -45,6 +45,8 @@ class DevicesController < ApplicationController
 
   def show
     @device = Device.find(params[:id])
-
   end
+
+  
+
 end

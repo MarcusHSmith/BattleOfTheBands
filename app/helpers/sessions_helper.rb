@@ -13,7 +13,6 @@ module SessionsHelper
 		user == current_user
 	end	
 	def signed_in?
-		p "Signed_in? ", !current_user.nil?
 		!current_user.nil?
 	end
 	def sign_out

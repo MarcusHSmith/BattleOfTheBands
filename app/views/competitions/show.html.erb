@@ -10,17 +10,18 @@
   <%= @user.name %>
 </p>
 <p><strong>Attendees: </strong>
-    <%= link_to 'Attend Competition', attend_competition_path(@competition.id), :method => :post %>
+    <% if @competition.users.exclude?(@user)  %>
+      <%= link_to 'Attend Competition', attend_competition_path(@competition.id), :method => :post %>
+    <% else %>
+      <%= link_to 'Withdraw', withdraw_competition_path(@competition.id), :method => :post %>
+    <% end %>
 
     <ul>
         <% for attendee in @competition.users %>
-            <% if attendee.id == current_user.id %>
-                <li><strong><%= link_to attendee.name, user_path %></strong>
-                   <!-- <%= link_to 'Withdraw', withdraw_competition_path(@competition.id), :method => :post %> -->
-                </li>
-            <% else %>
-                <li><%= link_to attendee.name, user_path %></li>
-            <% end %>
+          <li><%= link_to attendee.name, user_path %></li>
+          <% if attendee.year != [] %>
+           <p><%= attendee.year %></p>
+          <% end %>
         <% end %>   
     </ul>
 </p>

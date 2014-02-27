@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Title</th>
-    <th>User</th>
+    <th>Competitors</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,9 +11,8 @@
 
 <% @competitions.each do |competition| %>
   <tr>
-    <td><%= competition.title %></td>
-    <td><%= competition.user_id %></td>
-    <td><%= link_to 'Show', competition %></td>
+    <td><%= link_to competition.title , competition %></td>
+    <td><%= competition.users.length %></td>
     <td><%= link_to 'Edit', edit_competition_path(competition) %></td>
     <td><%= link_to 'Destroy', competition, confirm: 'Are you sure?', method: :delete %></td>
   </tr>

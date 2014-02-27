@@ -6,52 +6,66 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    p "print @user"
     p @user
+    p "print @device"
+    p @user.device
     if (@user.device != nil)
       @device = @user.device
-
       client = Fitgem::Client.new(
         :consumer_key => 'b4aacb5c2c8c43e2a6873877cd2ad9b1',
         :consumer_secret => '88bd78fc86d84d6c9aa7b1c0b8d4511f',
         :token => @device.oauth_token,
         :secret => @device.oauth_token_secret
-        #:user_id => @device.uid
       )
       now =  Time.now()
       last = @device.lastUpdated
       p now.day
       p last.day
-
-
-      while now.day > last.day
+      while now.to_date > last.to_date
         day = client.activities_on_date last.strftime("%Y-%m-%d")
         break if day['errors'] != nil
+        p "WHILE loop"
         p day
         day = day['summary']['steps']
-        now = now + 1.days
-        @user.year = @user.year.unshift(day)
+        last = last + 1.days
+        @user.daily = @user.daily.unshift(day)
+        p @user.daily
       end
-      #doesn't include today
-      if now.day != last.day
-        day = (client.activities_on_date 'today')
-        if day['errors'] == nil
-          @user.today_steps = day['summary']['steps']
-          @user.year.unshift(@user.today_steps)
-        end
-      else
-        if day['errors'] == nil
-          @user.today_steps = (client.activities_on_date 'today')['summary']['steps']
-          @user.year[0] = @user.today_steps
+      day = (client.activities_on_date 'today')
+      p "TODAY"
+      p day
+      if day['errors'] == nil
+        @user.today_steps = day['summary']['steps']
+        p @device.lastUpdated.in_time_zone("Pacific Time (US & Canada)")
+        if now.day != @device.lastUpdated.in_time_zone("Pacific Time (US & Canada)").day
+          p "New today"
+          @user.daily.unshift(@user.today_steps)
+        else
+          p "Old today"
+          p @user.today_steps
+          p @user.daily
+          @user.daily[0] = @user.today_steps
         end
       end
 
-      p @user.year
+      
       @device.lastUpdated = now
 
+      p @device.lastUpdated
+      p @user.daily
+
+      @user.device.errors.full_messages
+      @user.device.save
+      @user.device.errors.full_messages
+
+      if @user.save(validate: false)
+        p "Updated"
+      else 
+        p "Failed to Update"
+      end
     end
-    
     @competitions = @user.competitions.paginate(page: params[:page])
-    
   end
 
   def new
@@ -67,7 +81,8 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
   end
-    def update
+
+  def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
@@ -77,40 +92,40 @@ class UsersController < ApplicationController
     end
   end
 
-def create
+  def create
     @user = User.new(params[:user])
-
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to the Battle of The Bands! Now link a device to compete"
       redirect_to @user
     else
       render 'new'
     end
   end
 
-
   def index
     @users = User.paginate(page: params[:page])
   end
+
   private
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
     end
-  
+
     def signed_in_user
       unless signed_in?
         store_location
         redirect_to signin_path, notice: "Please sign in."
       end
     end
+
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user? (@user)
     end
+
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
- 
 end

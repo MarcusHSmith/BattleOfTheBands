@@ -30,7 +30,8 @@ gem 'omniauth-fitbit'
 gem 'nifty-generators'
 gem 'fitgem'
 gem 'devise'
-
+gem 'time_difference'
+gem 'thin'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

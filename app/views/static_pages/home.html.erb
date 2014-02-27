@@ -1,9 +1,21 @@
-<div class="center hero-unit">
-  <h1>Battle Of The Bands</h1>
+<% if signed_in? %>
+	<div class="center hero-unit">
+	  <h1>Battle Of The Bands</h1>
 
-  <h2>
-    Connecting fitness band athletes in competition
-  </h2>
+	  <h2>
+	    Connecting fitness band athletes in competition
+	  </h2>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
-</div>
+	</div>
+<% else %>
+
+	<div class="center hero-unit">
+	  <h1>Battle Of The Bands</h1>
+
+	  <h2>
+	    Connecting fitness band athletes in competition
+	  </h2>
+
+	  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+	</div>
+<% end %>
