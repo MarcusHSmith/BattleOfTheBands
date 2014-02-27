@@ -15,17 +15,17 @@
     <% else %>
       <%= link_to 'Withdraw', withdraw_competition_path(@competition.id), :method => :post %>
     <% end %>
-
-    <ul>
-        <% for attendee in @competition.users %>
-          <li><%= link_to attendee.name, user_path %></li>
-          <% if attendee.daily != [] %>
-           <p><%= attendee.daily %></p>
-           <p><%= attendee.daily.first(7).sum %></p>
-          <% end %>
-        <% end %>   
-    </ul>
 </p>
+<% a = 1 %>
+<% for attendee in @competition.users %>
+  <p2><strong><%= a %> </strong><%= link_to attendee.name, user_path %></p2>
+  <% if attendee.daily != [] %>
+   <p><%= attendee.daily.first(7).sum %></p>
+  <% end %>
+  <% a = a + 1 %>
+<% end %>
+
+
 
 <%= link_to 'Edit', edit_competition_path(@competition) %> |
 <%= link_to 'Back', competitions_path %>

@@ -54,7 +54,9 @@ class UsersController < ApplicationController
 
       p @device.lastUpdated
       p @user.daily
+      p @user.daily.size
 
+      
       @user.device.errors.full_messages
       @user.device.save
       @user.device.errors.full_messages

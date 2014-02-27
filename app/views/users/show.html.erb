@@ -8,8 +8,16 @@
       </h1>
       <% if @device %>
         <p><%= link_to @device.provider, ("http://www.fitbit.com/user/" + @device.uid) %></p>
-        <p><%= @user.today_steps %> steps today</p>
-
+        <% (0..(@user.daily.size-1)).each do |i| %>
+          <p2><strong><%= @user.daily[i] %></strong> (<%= i + 1 %> days ago)</p2>
+          </br>
+        <% end %>
+      <% else %>
+      <% if current_user == @user %>
+        <%= link_to "Connect a Device", devices_path %>
+      <% else %>
+        <p>User does not have device</p>
+      <% end %>
       <% end %>
     </section>
   </aside>

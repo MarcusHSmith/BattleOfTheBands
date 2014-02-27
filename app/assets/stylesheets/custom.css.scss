@@ -1,12 +1,25 @@
 $grayMediumLight: #eaeaea;
 $linkColor:       #000000;
-$linkColorHover:  #eaeaea;
+$linkColorHover:  #000000;
 $navbarText:      #ffffff;
 
 
 @import "bootstrap";
 
 /* mixins, variables, etc. */
+
+.api {
+  vertical-align: bottom;
+}
+
+api>li>a:hover {
+  color: #000000
+}
+.custom-nav-text {
+  color: black;
+
+}
+
 
 .navbar-inverse .navbar-nav>li>a:hover {
   color: #707070;

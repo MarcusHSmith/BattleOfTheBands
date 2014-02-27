@@ -1,6 +1,7 @@
 class CompetitionsController < ApplicationController
-  before_filter   :signed_in_user, only: [:index, :edit, :update, :destroy, :create, :attend]
-
+  before_filter   :signed_in_user,  only: [:index, :edit, :update, :destroy, :create, :attend]
+  before_filter   :correct_user,    only: [:edit, :update, :destroy]
+  before_filter   :admin_user,      only: :destroy
   def index
     @competitions = Competition.all
   end
@@ -113,7 +114,7 @@ class CompetitionsController < ApplicationController
     end
 
     def correct_user
-      if (Event.find(params[:id]).user_id != current_user.id and !current_user.admin?)
+      if (Competition.find(params[:id]).user_id != current_user.id and !current_user.admin?)
         redirect_to competitions_path
         flash[:error] = "You do not own this competition"
       end

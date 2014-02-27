@@ -21,7 +21,7 @@ BattleOfTheBands::Application.routes.draw do
 
   match '/auth/:provider/callback'  => 'devices#create'
   match '/devices'                  => 'devices#index'
-  match '/device/api'              => 'device#api'
+  match '/device/api'               => 'device#api'
 
   resources   :competitions do
     post 'attend', on: :member
