@@ -2,6 +2,8 @@ class CompetitionsController < ApplicationController
   before_filter   :signed_in_user,  only: [:index, :edit, :update, :destroy, :create, :attend]
   before_filter   :correct_user,    only: [:edit, :update, :destroy]
   before_filter   :admin_user,      only: :destroy
+  before_filter   :has_device,      only: :attend
+
   def index
     @competitions = Competition.all
   end
@@ -122,5 +124,12 @@ class CompetitionsController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def has_device
+      if current_user.device == nil
+        redirect_to device_path
+        flash[:error] = "No device connected"
+      end
     end
 end
