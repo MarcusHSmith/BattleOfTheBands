@@ -31,6 +31,7 @@ gem 'nifty-generators'
 gem 'fitgem'
 gem 'devise'
 gem 'thin'
+gem 'quiet_assets', :group => :development
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

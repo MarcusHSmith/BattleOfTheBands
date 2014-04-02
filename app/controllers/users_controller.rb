@@ -6,10 +6,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    p "print @user"
-    p @user
-    p "print @device"
-    p @user.device
     if (@user.device != nil)
       @device = @user.device
       client = Fitgem::Client.new(
@@ -20,43 +16,25 @@ class UsersController < ApplicationController
       )
       now =  Time.now()
       last = @device.lastUpdated
-      p now.day
-      p last.day
       while now.to_date > last.to_date
         day = client.activities_on_date last.strftime("%Y-%m-%d")
         break if day['errors'] != nil
-        p "WHILE loop"
-        p day
         day = day['summary']['steps']
         last = last + 1.days
         @user.daily = @user.daily.unshift(day)
-        p @user.daily
       end
       day = (client.activities_on_date 'today')
-      p "TODAY"
-      p day
       if day['errors'] == nil
         @user.today_steps = day['summary']['steps']
-        p @device.lastUpdated.in_time_zone("Pacific Time (US & Canada)")
         if now.day != @device.lastUpdated.in_time_zone("Pacific Time (US & Canada)").day
-          p "New today"
           @user.daily.unshift(@user.today_steps)
         else
-          p "Old today"
-          p @user.today_steps
-          p @user.daily
           @user.daily[0] = @user.today_steps
         end
       end
 
       
       @device.lastUpdated = now
-
-      p @device.lastUpdated
-      p @user.daily
-      p @user.daily.size
-
-      
       @user.device.errors.full_messages
       @user.device.save
       @user.device.errors.full_messages

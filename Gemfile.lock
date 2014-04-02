@@ -102,6 +102,8 @@ GEM
     orm_adapter (0.5.0)
     pg (0.15.1)
     polyglot (0.3.4)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -204,6 +206,7 @@ DEPENDENCIES
   omniauth
   omniauth-fitbit
   pg (= 0.15.1)
+  quiet_assets
   rails (= 3.2.3)
   rails_12factor (= 0.0.2)
   rspec-rails

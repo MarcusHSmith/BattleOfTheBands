@@ -11,24 +11,15 @@ class CompetitionsController < ApplicationController
   def show
     @competition = Competition.find(params[:id])
     @user = User.find(current_user.id)
-    #@competition.users[0].today_steps
-    
     @competition.users.sort_by!{|user| -user.daily.first(7).sum}
-    for comp in @competition.users
-      p comp.name
-      p comp.daily
-
-    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @competition }
     end
   end
 
-
   def new
     @competition = Competition.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @competition }
@@ -67,7 +58,6 @@ class CompetitionsController < ApplicationController
   def destroy
     @competition = Competition.find(params[:id])
     @competition.destroy
-
     respond_to do |format|
       format.html { redirect_to competitions_url }
       format.json { head :no_content }
@@ -75,7 +65,6 @@ class CompetitionsController < ApplicationController
   end
 
   def attend
-    p current_user.daily
     @competition = Competition.find(params[:id])
     if @competition.users.include?(current_user)
       flash[:error] = "You're already attending this competition."
@@ -89,8 +78,7 @@ class CompetitionsController < ApplicationController
   end
 
   def withdraw
-    @competition    = Competition.find(params[:id])
-    p @competition
+    @competition = Competition.find(params[:id])
     attendee = Attendee.find_by_user_id_and_competition_id(current_user.id, @competition.id)
     if attendee.blank?
       flash[:error] = "No current attendees"
@@ -98,7 +86,6 @@ class CompetitionsController < ApplicationController
       attendee.delete
       flash[:success] = 'You are no longer attending this competition.'
     end
-    p attendee
     redirect_to @competition
   end
 
